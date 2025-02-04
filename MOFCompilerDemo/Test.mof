@@ -1,0 +1,23 @@
+#PRAGMA NAMESPACE ("\\\\.\\root\\subscription")
+
+instance of __EventFilter as $Filter
+{
+    Name = "HelloTest";
+    EventNamespace = "root\\CIMv2";
+    Query ="SELECT * FROM __InstanceCreationEvent Within 1 "
+            "Where TargetInstance Isa \"Win32_LogonSession\" ";
+    QueryLanguage = "WQL";
+};
+
+instance of CommandLineEventConsumer as $Consumer
+{
+    Name = "HelloTest";
+    RunInteractively=false;
+    CommandLineTemplate="cmd.exe /c echo \"hello\" > C:\\hello.txt";
+};
+
+instance of __FilterToConsumerBinding
+{ 
+     Filter = $Filter;
+     Consumer = $Consumer;
+};
